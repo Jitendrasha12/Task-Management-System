@@ -24,23 +24,49 @@ export class MailNotifier {
     this.transporter.use("compile", htmlToText());
   }
 
- async sendRegistrationEmail({ to, username }) {
-  console.log(to, 'this is to', mailFrom, username);
-  console.log(`${this.root}/server/templates/registrationSuccess.html`,'our file path')
+  async sendRegistrationEmail({ to, username }) {
+    try {
+      const emailTemplate = `
+        <html xmlns="http://www.w3.org/1999/xhtml">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <head>
+            <title>Task Management System</title>
+          </head>
+          <body>
+            <table cellpadding="8" width="100%" height="100%" style="font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; background-color: #ededed;">
+              <tr>
+                <td>
+                  <table cellpadding="8" cellspacing="1" style="background-color: #ffffff; padding: 10px 20px 30px; margin: 10% auto !important; box-shadow: 0 0 6px rgba(0, 0, 0, 0.1); -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.1); width: 500px;" align="center">
+                    <tr>
+                      <td colspan="2" align="center" style="border-bottom: 1px solid #e4e4e4"></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="padding-top: 10px">Dear User ${username},</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <br />Welcome! You have been successfully registered.
+                        <br />
+                        <br />
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </body>
+        </html>
+      `;
 
-  try {
-    const mailOptions = {
-      from: mailFrom,
-      to: to,
-      subject: "Registration Successful",
-      html: Fs.readFileSync(
-        Path.normalize(
-          `${this.root}/server/templates/registrationSuccess.html`
-        )
-      )
-        .toString()
-        .replace("{{username}}", username), 
-    };
+      // Log the email content for debugging
+      console.log(emailTemplate);
+
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: to,
+        subject: 'Registration Successful',
+        html: emailTemplate  // Pass the final email template with username
+      };
 
     await this.transporter.sendMail(mailOptions);
     console.log("Registration email sent successfully");
