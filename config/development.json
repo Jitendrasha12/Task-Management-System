@@ -1,0 +1,51 @@
+{
+	"port": 3000,
+	"database": {
+		"host": "mongodb://localhost:27017/Task_Management_system"
+	},
+	"mailFrom": "jitendra.sharma8859@gmail.com",
+	"mailCredential": {
+		"host": "smtp.gmail.com",
+     " port": 465,
+     " secure": true, 
+      "auth": {
+        "user": "jitendra.sharma6860@gmail.com",
+        "pass": "qimmfhntrnmpvyyp"
+      }
+	},
+	"jwtsecret": "d>CH6&/z_T-Ldm%N",
+	
+	"jwtOptions": {
+		"expiresInHour": "168h"
+	},
+	
+	"saltRounds": 10,
+	"swaggerDefinition": {
+		"info": {
+			"title": "Task_Management_system",
+			"version": "1.0",
+			"description": "Task Management System"
+		},
+		"basePath": "/v1",
+		"schemes": [
+			"http"
+		],
+		"securityDefinitions": {
+			"tokenauth": {
+				"type": "apiKey",
+				"name": "Authorization",
+				"in": "header"
+			}
+		}
+	},
+	
+	
+	
+	"projectId": "Task Management System"
+	
+	
+
+	
+
+	
+}

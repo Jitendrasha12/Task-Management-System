@@ -1,0 +1,6 @@
+node_modules
+*.DS_Store
+log
+.jshintrc
+uploads
+package-lock.json
